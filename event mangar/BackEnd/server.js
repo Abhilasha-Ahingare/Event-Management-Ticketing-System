@@ -7,6 +7,8 @@ const userRouter = require("./Router/User_Router.js");
 const eventRouter = require("./Router/Event_router.js");
 const paymentRouter = require("./Router/payment_router.js");
 const ticketRouter = require("./Router/tickect_router.js");
+const OrganizerRouter = require("./Router/Organizer_router.js");
+const adminRouter = require("./Router/admin_router.js");
 
 const app = express();
 
@@ -19,6 +21,8 @@ app.use("/api/auth", userRouter);
 app.use("/api/event", eventRouter);
 app.use("/api/payment", paymentRouter);
 app.use("/api/tickets", ticketRouter);
+app.use("/api/organizer", OrganizerRouter);
+app.use("/api/admin", adminRouter);
 
 const PORT = process.env.PORT || 4001;
 
