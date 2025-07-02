@@ -13,7 +13,13 @@ const adminRouter = require("./Router/admin_router.js");
 const app = express();
 
 // ✅ Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [process.env.CLIENT_URL],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // ✅ Routers
