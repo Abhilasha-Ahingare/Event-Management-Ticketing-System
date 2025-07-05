@@ -1,8 +1,11 @@
 import React from 'react'
 
 const Register = () => {
+
   return (
-    <div>Register</div>
+    <div className='w-full h-screen flex justify-center items-center bg-gray-50'>
+      <form className='border-red-100'></form>
+    </div>
   )
 }
 
