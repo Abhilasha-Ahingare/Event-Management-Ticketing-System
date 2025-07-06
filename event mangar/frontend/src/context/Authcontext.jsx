@@ -1,74 +1,55 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../context/utils/api";
+import { useNavigate } from "react-router-dom";
 
 const Authcontext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const Authorization = `Bearer ${token}`;
+  const navigate = useNavigate();
 
-  const storeToken = (serverToken) => {
-    setToken(serverToken);
-    return localStorage.setItem("token", serverToken);
-  };
+  // Check if user is logged in
+  const isLoggedIn = !!localStorage.getItem("token");
 
-  let isLogIn = !!token;
-
-  const LogoutUser = () => {
-    setToken("");
+  // Logout function
+  const logout = () => {
     localStorage.removeItem("token");
+    setUser(null);
+    navigate("/login");
   };
 
-  const UserAuthentication = async () => {
+  // Check user on first load
+  const checkUser = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get(`/auth/user`, { withCredentials: true });
-      if (response.status === 200) {
-        const data = await response.json();
-        // Make sure to set user to the user object with a role property
-        setUser(data.user || data); // adjust as per your backend response
-        setIsLoading(false);
-      } else {
-        setUser(null);
-        setIsLoading(false);
-      }
+      const response = await api.get("/auth/user");
+      // console.log("✅ Fetched user from backend:", response.data.user);
+      setUser(response.data.user);
     } catch (error) {
+      // console.log("🚫 Error fetching user:", error);
       setUser(null);
+    } finally {
       setIsLoading(false);
     }
   };
 
-  const [Events, setEvents] = useState([]);
-
-  const GetEvents = async () => {
-    try {
-      const response = await api.get(`/api/event/get-all-event`);
-      if (response.status(200)) {
-        const Events = await response.json();
-        // console.log(Events);
-        setEvents(Events);
-      }
-    } catch (error) {
-      // console.error("events error", error);
-    }
-  };
-
   useEffect(() => {
-    GetEvents();
-    UserAuthentication();
+    if (isLoggedIn) {
+      checkUser();
+    } else {
+      setIsLoading(false);
+    }
   }, []);
+
   return (
     <Authcontext.Provider
       value={{
-        LogoutUser,
-        storeToken,
         user,
+        setUser,
+        isLoggedIn,
         isLoading,
-        isLogIn,
-        Authorization,
-        Events
+        logout,
       }}
     >
       {children}
