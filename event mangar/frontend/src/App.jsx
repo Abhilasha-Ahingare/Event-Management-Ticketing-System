@@ -9,8 +9,11 @@ import OrganizerDashBoard from "./pages/OrganizerDashBoard";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import ProtectRoutes from "./ProtectRoutes";
+import { UserAuth } from "./context/Authcontext";
 
 function App() {
+  // const { user , setUser } = UserAuth();
+  // console.log( setUser)
   return (
     <>
       <Navbar />

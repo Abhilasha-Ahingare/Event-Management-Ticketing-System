@@ -12,5 +12,7 @@ router.post("/registration", Registration);
 router.post("/login", login);
 
 router.get("/user", protect, UserProfile);
+// router.put("")
+// router.delete("")
 
 module.exports = router;
