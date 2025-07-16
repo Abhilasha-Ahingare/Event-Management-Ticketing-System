@@ -1,13 +1,10 @@
 import axios from "axios";
-// Create axios instance with base configuration
+
 const api = axios.create({
   baseURL: import.meta.env.SERVER_URL || "http://localhost:4001/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
 });
 
-// Add request interceptor to handle auth token
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
@@ -16,8 +13,18 @@ api.interceptors.request.use(
     }
     return config;
   },
+  (error) => Promise.reject(error)
+);
+
+api.interceptors.response.use(
+  (response) => response,
   (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
     return Promise.reject(error);
   }
 );
+
 export default api;

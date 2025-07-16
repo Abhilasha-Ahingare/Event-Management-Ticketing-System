@@ -9,6 +9,7 @@ import OrganizerDashBoard from "./pages/OrganizerDashBoard";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import ProtectRoutes from "./ProtectRoutes";
+import EventsCard from "./components/EventsCard";
 // import { UserAuth } from "./context/Authcontext";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Register />} />
+        <Route path="/event" element={<EventsCard />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route
           path="/tickets"

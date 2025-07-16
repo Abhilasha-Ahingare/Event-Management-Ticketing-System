@@ -9,7 +9,7 @@ const ticketSchema = new Schema(
     },
     eventId: {
       type: Schema.Types.ObjectId,
-      ref: "Event",
+      ref: "Event", // <-- This is correct for population
       required: true,
     },
     quantity: { type: Number, default: 1 },

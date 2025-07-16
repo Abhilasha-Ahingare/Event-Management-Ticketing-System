@@ -6,17 +6,17 @@ import api from "../context/utils/api";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = UserAuth();
+  const { setUser, StoreToken } = UserAuth();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
       const { data } = await api.post(`/auth/login`, { email, password });
-      localStorage.setItem("token", data.token);
+      StoreToken(data.token);
       setUser(data.user);
 
-      alert("Login successfully!");
+      alert("Login successful!");
       navigate("/");
     } catch (err) {
       alert(err.response?.data?.message || "Login failed. Try again.");
@@ -25,67 +25,53 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-gray-50">
+    <div className="w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-purple-100 px-4">
       <form
-        className="w-full max-w-md bg-white p-8 rounded-lg border shadow-sm m-4"
         onSubmit={submitHandler}
+        className="w-full max-w-md bg-white rounded-xl shadow-xl p-8 border"
       >
-        <div className="flex flex-col items-center mb-6">
-          <h2 className="text-xl font-medium mb-2">Welcome Back! 💬</h2>
-          <p className="text-center text-gray-600 mb-6 uppercase">
-            Enter your email and password
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-blue-700 mb-2">Welcome Back! 💬</h2>
+          <p className="text-gray-600 uppercase tracking-wide text-sm">
+            Login to your account
           </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold mb-2 uppercase"
-            >
-              Email
-            </label>
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold mb-2 uppercase">Email</label>
             <input
               type="email"
               value={email}
-              name="email"
-              id="email"
-              placeholder="Enter your email id"
-              autoComplete="new-password"
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+              placeholder="Enter your email"
+              required
             />
           </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-semibold mb-2 uppercase"
-            >
-              Password
-            </label>
+          <div>
+            <label className="block text-sm font-semibold mb-2 uppercase">Password</label>
             <input
               type="password"
               value={password}
-              name="password"
-              id="password"
-              placeholder="Enter your password"
-              autoComplete="new-password"
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-950"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
+              placeholder="Enter your password"
               minLength="6"
+              required
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors font-serif"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
           >
             Login
           </button>
         </div>
-        <div className="mt-6 text-center">
-          <span className="text-gray-600">Don't have an account? </span>
-          <Link to="/registration" className="text-blue-600 hover:underline">
+
+        <div className="mt-6 text-center text-sm text-gray-700">
+          Don't have an account?{" "}
+          <Link to="/registration" className="text-blue-600 hover:underline font-semibold">
             Register
           </Link>
         </div>

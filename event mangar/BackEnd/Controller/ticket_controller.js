@@ -31,8 +31,9 @@ const createTickets = async (req, res) => {
 const getAllTicket = async (req, res) => {
   try {
     const tickets = await Ticket.find({ userId: req.user._id })
-      .populate("event", "title date location price")
+      .populate("eventId", "title date location price")
       .sort({ createdAt: -1 });
+
     return res
       .status(200)
       .json({ message: "Get all tickets successfully", tickets });
@@ -46,7 +47,7 @@ const scanTicket = async (req, res) => {
   try {
     const { ticketId } = req.body;
 
-    const ticket = await Ticket.findById(ticketId).populate("event");
+    const ticket = await Ticket.findById(ticketId).populate("eventId");
 
     if (!ticket) {
       return res.status(404).json({ message: "Ticket not found" });

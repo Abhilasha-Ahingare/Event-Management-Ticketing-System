@@ -1,9 +1,128 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
+import { FaUserCircle, FaBars } from "react-icons/fa";
+import { useState } from "react";
+import { UserAuth } from "../context/Authcontext";
 
 const Navbar = () => {
-  return (
-    <div>Navbar</div>
-  )
-}
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = UserAuth();
 
-export default Navbar
+  return (
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg text-white">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+        <Link to="/" className="flex items-center gap-2">
+          <img
+            src="/logo192.png"
+            alt="Logo"
+            className="h-10 w-10 rounded-full shadow-md"
+          />
+          <span className="text-2xl font-bold">EventCo</span>
+        </Link>
+
+        {user.role === "user" ? (
+          <>
+            <div className="hidden md:flex items-center space-x-8">
+              <Link to="/" className="hover:text-yellow-300 transition">
+                Home
+              </Link>
+              <Link to="/event" className="hover:text-yellow-300 transition">
+                Events
+              </Link>
+              <Link to="/tickets" className="hover:text-yellow-300 transition">
+                Tickets
+              </Link>
+              <Link to="/" className="hover:text-yellow-300 transition">
+                About
+              </Link>
+              {/* Profile icon for desktop */}
+              <Link to="/profile" className="hover:text-yellow-300 transition">
+                <FaUserCircle size={28} />
+              </Link>
+            </div>
+          </>
+        ) : (
+          <Link
+            to="/login"
+            className="hover:bg-purple-400 transition bg-purple-300 text-black p-2 pl-5 pr-5 rounded-lg  text-center cursor-pointer"
+          >
+            login
+          </Link>
+        )}
+
+        {/* Mobile menu button and profile icon for logged-in users */}
+        <div className="md:hidden flex items-center">
+          {/* {user.role === "user" && (
+            <Link
+              to="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 hover:text-yellow-300 transition"
+            >
+              <FaUserCircle size={20} />
+            </Link>
+          )} */}
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            <FaBars size={24} />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-gradient-to-r from-blue-600 to-purple-600 flex flex-col space-y-4 p-6 transition-all">
+          {user.role === "user" ? (
+            <>
+              <Link
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300 transition"
+              >
+                Home
+              </Link>
+              <Link
+                to="/events"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300 transition"
+              >
+                Events
+              </Link>
+              <Link
+                to="/tickets"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300 transition"
+              >
+                Tickets
+              </Link>
+              <Link
+                to="/about"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300 transition"
+              >
+                About
+              </Link>
+              {/* Profile icon for mobile menu */}
+              <Link
+                to="/profile"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 hover:text-yellow-300 transition"
+              >
+                <FaUserCircle size={24} />
+                <span>Profile</span>
+              </Link>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-yellow-300 transition bg-purple-300 text-black px-4 py-2 rounded"
+            >
+              login
+            </Link>
+          )}
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;

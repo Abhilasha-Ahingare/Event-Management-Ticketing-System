@@ -35,110 +35,87 @@ const Register = () => {
       }
     } catch (error) {
       alert("Registration failed. Please try again.");
-      console.error("registration failed", error);
+      console.error("Registration failed", error);
     }
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-gray-50">
+    <div className="w-full min-h-screen flex justify-center items-center bg-gradient-to-tr from-blue-50 to-purple-100 px-4">
       <form
-        className="w-full max-w-md bg-white p-8 rounded-lg border shadow-sm m-4"
         onSubmit={submitHandler}
+        className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 border"
       >
-        <div className="flex flex-col items-center mb-6">
-          <h2 className="text-xl font-medium mb-2">hey there ! 🙋🏻‍♀️</h2>
-          <p className="text-center text-gray-600 mb-6 uppercase">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-blue-700 mb-2">Hey there! 🙋🏻‍♀️</h2>
+          <p className="text-gray-600 uppercase tracking-wide text-sm">
             Create your account
           </p>
         </div>
-        <div className="space-y-4">
-          <div className="mb-4">
-            <label
-              htmlFor="Username"
-              className="block text-sm font-semibold mb-2 uppercase"
-            >
-              Username
-            </label>
+
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold mb-2 uppercase">Username</label>
             <input
               type="text"
               value={Username}
-              name="Username"
-              id="Username"
-              placeholder="Enter your Username"
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-500"
+              placeholder="Enter your username"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold mb-2 uppercase"
-            >
-              Email
-            </label>
+
+          <div>
+            <label className="block text-sm font-semibold mb-2 uppercase">Email</label>
             <input
               type="email"
               value={email}
-              name="email"
-              id="email"
-              placeholder="Enter your email id"
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-500"
+              placeholder="Enter your email"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-semibold mb-2 uppercase"
-            >
-              Password
-            </label>
+
+          <div>
+            <label className="block text-sm font-semibold mb-2 uppercase">Password</label>
             <input
               type="password"
               value={password}
-              name="password"
-              id="password"
-              placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-500"
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
               minLength="6"
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="role"
-              className="block text-sm font-semibold mb-2 uppercase"
-            >
-              Register as
-            </label>
+
+          <div>
+            <label className="block text-sm font-semibold mb-2 uppercase">Register as</label>
             <select
-              id="role"
-              name="role"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:right-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition"
               required
             >
-              <option value="user">user</option>
-              <option value="organizer">organizer</option>
+              <option value="user">User</option>
+              <option value="organizer">Organizer</option>
             </select>
           </div>
+
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition-colors font-serif"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
           >
             Register
           </button>
+        </div>
 
-          <div className="mt-6 text-center">
-            <span className="text-gray-600">you have an account? </span>
-            <Link to="/login" className="text-blue-600 hover:underline">
-              login
-            </Link>
-          </div>
+        <div className="mt-6 text-center text-sm text-gray-700">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 hover:underline font-semibold">
+            Login
+          </Link>
         </div>
       </form>
     </div>

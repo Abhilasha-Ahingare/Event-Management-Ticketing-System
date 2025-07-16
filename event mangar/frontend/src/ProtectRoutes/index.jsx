@@ -2,14 +2,21 @@ import React from "react";
 import { UserAuth } from "../context/Authcontext";
 import { Navigate } from "react-router-dom";
 
-
 const ProtectRoutes = ({ role, children }) => {
-  const { user } = UserAuth();
-  // If user is not loaded or not logged in, redirect to login
+  const { user, isLoading } = UserAuth();
+
+  if (isLoading) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <p className="text-xl font-semibold animate-pulse">Loading...</p>
+      </div>
+    );
+  }
+
   if (!user || !user.role) {
     return <Navigate to="/login" replace />;
   }
-  // If role is specified, check if user has required role(s)
+
   if (role) {
     if (Array.isArray(role)) {
       if (!role.includes(user.role)) {
@@ -21,6 +28,7 @@ const ProtectRoutes = ({ role, children }) => {
       }
     }
   }
+
   return children;
 };
 

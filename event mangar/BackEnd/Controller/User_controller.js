@@ -27,7 +27,7 @@ const Registration = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_PIN_CODE,
-      { expiresIn: "4h" },
+      { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
 
@@ -35,7 +35,7 @@ const Registration = async (req, res) => {
           success: true,
           user: {
             _id: newUser._id,
-            Username: newUser.Username,
+            name: newUser.Username,
             email: newUser.email,
             role: newUser.role,
           },
@@ -70,7 +70,7 @@ const login = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_PIN_CODE,
-      { expiresIn: "4h" },
+      { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
 
@@ -78,7 +78,7 @@ const login = async (req, res) => {
           success: true,
           user: {
             _id: userExists._id,
-            name: userExists.name,
+            name: userExists.Username,
             email: userExists.email,
             role: userExists.role,
           },

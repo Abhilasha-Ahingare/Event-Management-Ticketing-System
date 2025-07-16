@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
+import { UserAuth } from "../context/Authcontext";
 
 const MyTickets = () => {
-  return (
-    <div>MyTickets</div>
-  )
-}
+  const { ticket } = UserAuth();
+  return <div>MyTickets</div>;
+};
 
-export default MyTickets
+export default MyTickets;

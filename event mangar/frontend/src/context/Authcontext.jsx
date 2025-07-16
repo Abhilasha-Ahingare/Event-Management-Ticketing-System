@@ -7,57 +7,75 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [events, setEvents] = useState([]);
+  const [ticket, setTicket] = useState([]);
+
   const authorization = `Bearer ${token}`;
+  const isLogIn = !!token;
 
   const StoreToken = (serverToken) => {
     setToken(serverToken);
-    return localStorage.setItem("token", serverToken);
+    localStorage.setItem("token", serverToken);
   };
 
-  let isLogIn = !!token;
-  // Logout function
   const logout = () => {
     setToken("");
+    setUser("");
     localStorage.removeItem("token");
   };
 
-  // Check user data
   const UserAuthentication = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get(`/auth/user`);
-      // console.log("✅ Fetched user from backend:", response.data.user);
-      if (response.ok) {
+      const response = await api.get(`/auth/user`, {
+        headers: { Authorization: authorization },
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        // console.log(response.data.user);
         setUser(response.data.user);
-        setIsLoading(false);
       }
+      setIsLoading(false);
     } catch (error) {
       console.log("🚫 Error fetching user:", error);
-      setIsLoading(false);
-    } finally {
+      logout();
       setIsLoading(false);
     }
   };
-
-  //events
-  const [events, setEvent] = useState([]);
 
   const getEvents = async () => {
     try {
       const response = await api.get(`/event/get-all-event`);
       if (response.status === 200) {
-        console.log(response.data.getEvents);
-        setEvent(response.data.getevents);
+        // console.log("Fetched events:", response.data.getevents);
+        setEvents(response.data.getevents);
       }
     } catch (error) {
-      console.error("event not find", error);
+      console.error("Events not found", error);
     }
   };
 
+  const getTicket = async () => {
+    try {
+      const response = await api.get(`/tickets/get-my-tickets`);
+      if (response.status === 200) {
+        console.log("Fetched tickets array:", response.data.tickets);
+        setTicket(response.data.tickets);
+        // Optionally, log the updated state
+        // setTimeout(() => console.log("Updated ticket state:", ticket), 0);
+      }
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    UserAuthentication();
-    getEvents();
-  }, []);
+    if (token) {
+      UserAuthentication();
+      getEvents();
+      getTicket();
+    } else {
+      logout();
+    }
+  }, [token]);
 
   return (
     <Authcontext.Provider
@@ -69,13 +87,14 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         logout,
         events,
+        isLogIn,
+        ticket,
       }}
     >
       {children}
     </Authcontext.Provider>
   );
 };
-export const UserAuth = () => {
-  return useContext(Authcontext);
-};
+
+export const UserAuth = () => useContext(Authcontext);
 export default Authcontext;
