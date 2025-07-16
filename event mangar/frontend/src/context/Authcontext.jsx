@@ -1,45 +1,62 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../context/utils/api";
-import { useNavigate } from "react-router-dom";
 
 const Authcontext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const authorization = `Bearer ${token}`;
 
-  // Check if user is logged in
-  const isLoggedIn = !!localStorage.getItem("token");
-
-  // Logout function
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
-    navigate("/login");
+  const StoreToken = (serverToken) => {
+    setToken(serverToken);
+    return localStorage.setItem("token", serverToken);
   };
 
-  // Check user on first load
-  const checkUser = async () => {
+  let isLogIn = !!token;
+  // Logout function
+  const logout = () => {
+    setToken("");
+    localStorage.removeItem("token");
+  };
+
+  // Check user data
+  const UserAuthentication = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get("/auth/user");
+      const response = await api.get(`/auth/user`);
       // console.log("✅ Fetched user from backend:", response.data.user);
-      setUser(response.data.user);
+      if (response.ok) {
+        setUser(response.data.user);
+        setIsLoading(false);
+      }
     } catch (error) {
-      // console.log("🚫 Error fetching user:", error);
-      setUser(null);
+      console.log("🚫 Error fetching user:", error);
+      setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      checkUser();
-    } else {
-      setIsLoading(false);
+  //events
+  const [events, setEvent] = useState([]);
+
+  const getEvents = async () => {
+    try {
+      const response = await api.get(`/event/get-all-event`);
+      if (response.status === 200) {
+        console.log(response.data.getEvents);
+        setEvent(response.data.getevents);
+      }
+    } catch (error) {
+      console.error("event not find", error);
     }
+  };
+
+  useEffect(() => {
+    UserAuthentication();
+    getEvents();
   }, []);
 
   return (
@@ -47,9 +64,11 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         setUser,
-        isLoggedIn,
+        StoreToken,
+        authorization,
         isLoading,
         logout,
+        events,
       }}
     >
       {children}
