@@ -9,8 +9,8 @@ const Navbar = () => {
   const { user } = UserAuth();
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg text-white">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-3  shadow  transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700">
+      <div className="container mx-auto flex h-12 items-center justify-between px-4 md:px-8">
         <Link to="/" className="flex items-center gap-2">
           <img
             src="/logo192.png"

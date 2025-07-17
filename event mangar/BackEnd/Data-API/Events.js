@@ -11,6 +11,8 @@ const Events = [
     category: "Music",
     image: "https://cdn.example.com/events/rockfest.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Experience the best rock music, food stalls, and exclusive merchandise. Gates open at 5 PM.",
   },
   {
     title: "Tech Conference 2025",
@@ -24,6 +26,8 @@ const Events = [
     category: "Technology",
     image: "https://cdn.example.com/events/techconf.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Full-day event with keynote speakers, workshops, and networking zones. Lunch included.",
   },
   {
     title: "Food Carnival",
@@ -37,6 +41,8 @@ const Events = [
     category: "Food",
     image: "https://cdn.example.com/events/foodfest.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Enjoy unlimited tastings, live chef demos, and fun games for all ages.",
   },
   {
     title: "Startup Expo 2025",
@@ -50,6 +56,8 @@ const Events = [
     category: "Business",
     image: "https://cdn.example.com/events/startupexpo.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Startup booths, investor panels, and pitch competitions throughout the day.",
   },
   {
     title: "Marathon 2025",
@@ -62,6 +70,8 @@ const Events = [
     category: "Sports",
     image: "https://cdn.example.com/events/marathon.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "5K, 10K, and half marathon categories. Free T-shirt and refreshments for all participants.",
   },
   {
     title: "Comedy Night Live",
@@ -75,6 +85,8 @@ const Events = [
     category: "Comedy",
     image: "https://cdn.example.com/events/comedy.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Lineup includes 5 top comedians. Snacks and drinks available at the venue.",
   },
   {
     title: "International Jazz Festival",
@@ -87,6 +99,8 @@ const Events = [
     category: "Music",
     image: "https://cdn.example.com/events/jazzfest.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Multiple stages, international artists, and exclusive jazz workshops.",
   },
   {
     title: "Art & Craft Expo",
@@ -99,6 +113,7 @@ const Events = [
     category: "Art",
     image: "https://cdn.example.com/events/artcraft.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details: "Live art demos, craft workshops, and meet-the-artist sessions.",
   },
   {
     title: "Startup Pitch Day",
@@ -111,6 +126,7 @@ const Events = [
     category: "Business",
     image: "https://cdn.example.com/events/startup-pitch.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details: "Pitch sessions, networking, and feedback from top investors.",
   },
   {
     title: "Kids Carnival",
@@ -124,6 +140,7 @@ const Events = [
     category: "Kids",
     image: "https://cdn.example.com/events/kids-carnival.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details: "Unlimited rides, magic shows, and special kids' food menu.",
   },
   {
     title: "Literature Fest",
@@ -137,6 +154,7 @@ const Events = [
     category: "Literature",
     image: "https://cdn.example.com/events/litfest.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details: "Book launches, author signings, and interactive poetry sessions.",
   },
   {
     title: "Yoga & Wellness Retreat",
@@ -150,6 +168,8 @@ const Events = [
     category: "Health",
     image: "https://cdn.example.com/events/yoga-retreat.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details:
+      "Daily yoga, meditation, and wellness workshops. Healthy meals included.",
   },
   {
     title: "MotoGP Championship",
@@ -163,6 +183,7 @@ const Events = [
     category: "Sports",
     image: "https://cdn.example.com/events/motogp.jpg",
     organizer: "648a3a64fc13ae08423e654a",
+    details: "Grandstand seating, pit access, and fan zone activities.",
   },
 ];
 

@@ -9,61 +9,16 @@ import {
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { UserAuth } from "../context/Authcontext";
+import { useNavigate } from "react-router-dom";
 
 const EventsCard = () => {
-  // const events = [
-  //   {
-  //     id: 1,
-  //     title: "Summer Music Festival",
-  //     date: "August 15, 2025",
-  //     location: "Central Park, NYC",
-  //     description:
-  //       "An annual festival featuring top artists across various genres.",
-  //     image: "/placeholder.svg?height=200&width=300",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Tech Innovators Summit",
-  //     date: "September 10, 2025",
-  //     location: "Convention Center, SF",
-  //     description: "Explore the future of technology with industry leaders.",
-  //     image: "/placeholder.svg?height=200&width=300",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "City Marathon 2025",
-  //     date: "October 5, 2025",
-  //     location: "Downtown, LA",
-  //     description: "Join thousands of runners in this iconic annual marathon.",
-  //     image: "/placeholder.svg?height=200&width=300",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "Art & Design Expo",
-  //     date: "November 20, 2025",
-  //     location: "Exhibition Hall, Chicago",
-  //     description: "Showcasing contemporary art and innovative design.",
-  //     image: "/placeholder.svg?height=200&width=300",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Culinary Delights Fair",
-  //     date: "December 1, 2025",
-  //     location: "Food Market, Seattle",
-  //     description:
-  //       "A gastronomic journey with local and international cuisines.",
-  //     image: "/placeholder.svg?height=200&width=300",
-  //   },
-  //   {
-  //     id: 6,
-  //     title: "Winter Sports Gala",
-  //     date: "January 18, 2026",
-  //     location: "Mountain Resort, Denver",
-  //     description: "Celebrate winter sports with athletes and enthusiasts.",
-  //     image: "/placeholder.svg?height=200&width=300",
-  //   },
-  // ];
   const { events } = UserAuth();
+
+  const navigate = useNavigate();
+
+  const buttonhandle = (id) => {
+    navigate(`/event-detail/${id}`);
+  };
 
   return (
     <section
@@ -80,7 +35,7 @@ const EventsCard = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {events.map((event) => (
             <Card
-              key={event.id}
+              key={event._id}
               className="flex flex-col rounded-2xl shadow-lg bg-white hover:shadow-2xl transition-shadow duration-300 overflow-hidden border border-gray-200"
             >
               <div className="relative w-full h-56 bg-gray-100 flex items-center justify-center">
@@ -113,8 +68,11 @@ const EventsCard = () => {
                 </p>
               </CardContent>
               <CardFooter className="px-6 pb-6">
-                <Button className="w-full bg-gradient-to-r from-primary to-purple-600 text-white font-semibold py-3 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:bg-primary/90">
-                  Get Tickets
+                <Button
+                  className="w-full bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-8 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700"
+                  onClick={() => buttonhandle(event._id)}
+                >
+                  Get Events
                 </Button>
               </CardFooter>
             </Card>

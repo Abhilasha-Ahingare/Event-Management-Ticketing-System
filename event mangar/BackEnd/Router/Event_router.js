@@ -13,7 +13,7 @@ const EventProtect = require("../Middleware/Event_protect_middleware");
 
 // public router
 router.get("/get-all-event", getEvents);
-router.get("/:id", getEventById);
+router.get("/event-detail/:id", getEventById);
 
 //protected for organizers
 router.post("/create-event", protect, EventProtect, createEvent);

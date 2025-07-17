@@ -11,6 +11,7 @@ const eventSchema = new Schema(
     ticketsSold: { type: Number, default: 0 },
     category: { type: String, required: true },
     image: { type: String, required: true },
+    details: { type: String, required: true },
     organizer: {
       type: Schema.Types.ObjectId,
       ref: "User",

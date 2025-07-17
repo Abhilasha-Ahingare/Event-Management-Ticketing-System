@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.get(`/tickets/get-my-tickets`);
       if (response.status === 200) {
-        console.log("Fetched tickets array:", response.data.tickets);
+        // console.log("Fetched tickets array:", response.data.tickets);
         setTicket(response.data.tickets);
         // Optionally, log the updated state
         // setTimeout(() => console.log("Updated ticket state:", ticket), 0);

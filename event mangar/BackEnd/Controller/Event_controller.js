@@ -13,6 +13,7 @@ const createEvent = async (req, res) => {
       ticketsSold,
       category,
       image,
+      details,
     } = req.body;
 
     const createEvents = await Event.create({
@@ -25,7 +26,8 @@ const createEvent = async (req, res) => {
       ticketsSold,
       category,
       image,
-      organizer: req.user._id, 
+      details,
+      organizer: req.user._id,
     });
 
     return res
@@ -40,7 +42,9 @@ const createEvent = async (req, res) => {
 
 const getEvents = async (req, res) => {
   try {
-    const getevents = await Event.find().sort({ date: 1 });
+    const getevents = await Event.find()
+      .sort({ date: 1 })
+      .populate("organizer", "name email");
     return res.status(200).json({ message: "get all events", getevents });
   } catch (error) {
     res
@@ -51,7 +55,10 @@ const getEvents = async (req, res) => {
 
 const getEventById = async (req, res) => {
   try {
-    const singleEvent = await Event.findById(req.params.id);
+    const singleEvent = await Event.findById(req.params.id).populate(
+      "organizer",
+      "Username"
+    );
     if (!singleEvent) {
       return res.status(404).json({ message: "event not found " });
     }
@@ -73,6 +80,7 @@ const updateEvent = async (req, res) => {
       ticketsSold,
       category,
       image,
+      details,
     } = req.body;
 
     const eventId = req.params.id;
@@ -82,14 +90,6 @@ const updateEvent = async (req, res) => {
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
     }
-
-    // // Only allow organizer or admin
-    // if (
-    //   req.user.role !== "admin" &&
-    //   req.user._id.toString() !== event.organizer.toString()
-    // ) {
-    //   return res.status(403).json({ message: "Not authorized to update this event" });
-    // }
 
     // Now update
     const updatedEvent = await Event.findByIdAndUpdate(
@@ -104,6 +104,7 @@ const updateEvent = async (req, res) => {
         ticketsSold,
         category,
         image,
+        details,
         organizer: req.user._id,
       },
       { new: true, runValidators: true }
