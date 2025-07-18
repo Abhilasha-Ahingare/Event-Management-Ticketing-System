@@ -15,11 +15,7 @@ const EventDetails = () => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  // const navigate = useNavigate();
-
-  // const buttonhandle = () => {
-  //   navigate("/tickets")
-  // };
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchSingleEvent = async () => {
@@ -37,6 +33,18 @@ const EventDetails = () => {
     };
     fetchSingleEvent();
   }, [id]);
+
+  const handleByTicket = async () => {
+    try {
+      const response = await api.post(`/payment/checkout`, {
+        eventId: event._id,
+        quantity,
+      });
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.error("checkout error", error);
+    }
+  };
 
   if (loading)
     return <p className="text-center mt-20">Loading event details...</p>;
@@ -125,9 +133,30 @@ const EventDetails = () => {
 
           {/* CTA */}
           <CardFooter className="px-8 pb-8 pt-4 flex justify-end">
-            <Button className="bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-8 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700">
-              Get Tickets
-            </Button>
+            <div className="flex items-center gap-4">
+              <label htmlFor="quantity" className="font-medium text-gray-700">
+                Quantity:
+              </label>
+              <select
+                id="quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+                className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-700"
+              >
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
+                ))}
+              </select>
+              <Button
+                className="bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-8 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700"
+                disabled={!quantity}
+                onClick={handleByTicket}
+              >
+                Get Tickets
+              </Button>
+            </div>
           </CardFooter>
         </Card>
       </div>

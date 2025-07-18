@@ -67,6 +67,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {}
   };
 
+
   useEffect(() => {
     if (token) {
       UserAuthentication();

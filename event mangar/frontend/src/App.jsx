@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import ProtectRoutes from "./ProtectRoutes";
 import EventsCard from "./components/EventsCard";
+import PaymentSuccess from "./pages/PaymentSuccess";
+// import PaymentCancel from "./pages/PaymentCancel";
 // import { UserAuth } from "./context/Authcontext";
 
 function App() {
@@ -31,6 +33,7 @@ function App() {
         <Route path="/registration" element={<Register />} />
         <Route path="/event" element={<EventsCard />} />
         <Route path="/event-detail/:id" element={<EventDetail />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route
           path="/tickets"
           element={
@@ -47,6 +50,7 @@ function App() {
             </ProtectRoutes>
           }
         />
+        {/* <Route path="/payment-cancel" element={<PaymentCancel />} /> */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -27,7 +27,7 @@ const Registration = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_PIN_CODE,
-      { expiresIn: "1h" },
+      { expiresIn: "3h" },
       (err, token) => {
         if (err) throw err;
 
@@ -70,7 +70,7 @@ const login = async (req, res) => {
     jwt.sign(
       payload,
       process.env.JWT_PIN_CODE,
-      { expiresIn: "1h" },
+      { expiresIn: "3h" },
       (err, token) => {
         if (err) throw err;
 

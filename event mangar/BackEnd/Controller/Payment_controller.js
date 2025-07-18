@@ -1,7 +1,7 @@
 const stripe = require("../utils/stripe");
 const Events = require("../Models/Event_model");
 const User = require("../Models/User_model");
-const Ticket = require("./ticket_controller");
+const Ticket = require("../Models/ticket_model");
 const QRcode = require("../utils/qr");
 
 const createCheckoutSession = async (req, res) => {
@@ -28,9 +28,17 @@ const createCheckoutSession = async (req, res) => {
         },
       ],
       mode: "payment",
+      metadata: {
+        userId: req.user.id,
+        eventId: eventId,
+        quantity: quantity || 1,
+      },
       success_url: `${process.env.CLIENT_URL}/payment-success`,
+      // success_url: `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+
       cancel_url: `${process.env.CLIENT_URL}/payment-cancel`,
     });
+
     res.json({ url: session.url });
   } catch (error) {
     console.error("Stripe Error:", error);
@@ -63,19 +71,19 @@ const webhook = async (req, res) => {
     const quantity = parseInt(session.metadata.quantity);
 
     try {
-      const eventData = await Event.findById(eventId);
+      const eventData = await Events.findById(eventId);
 
       const totalPrice = eventData.price * quantity;
       let ticket = new Ticket({
-        user: userId,
-        event: eventId,
+        userId: userId,
+        eventId: eventId,
         quantity,
         totalPrice,
         paymentId: session.payment_intent,
         paymentStatus: "paid",
       });
 
-      const qrCode = await QRcode.toDataURL(ticket._id.toString());
+      const qrCode = await QRcode(userId, eventId);
       ticket.qrCode = qrCode;
       await ticket.save();
       console.log(`🎟 Ticket created for user ${userId} for event ${eventId}`);
@@ -87,4 +95,27 @@ const webhook = async (req, res) => {
   res.status(200).json({ received: true });
 };
 
-module.exports = { createCheckoutSession, webhook };
+const verifyPayment = async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    const ticket = await Ticket.findOne({
+      paymentId: session.payment_intent,
+    }).populate("eventId", "title");
+
+    if (!ticket) return res.status(404).json({ message: "Ticket not found" });
+
+    res.json({
+      ticketInfo: {
+        ...ticket.toObject(),
+        eventName: ticket.eventId.title,
+      },
+    });
+  } catch (err) {
+    console.error("Verify Payment Error:", err.message);
+    res.status(500).json({ message: "Verification failed" });
+  }
+};
+
+module.exports = { createCheckoutSession, webhook ,verifyPayment };

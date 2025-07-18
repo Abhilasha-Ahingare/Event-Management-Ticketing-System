@@ -7,7 +7,7 @@ const generateUniqueQRcode = async (userId, eventId) => {
     const qr = await QRcode.toDataURL(payload);
     return qr;
   } catch (error) {
-    console.error("QR Generation Failed:", err);
+    console.error("QR Generation Failed:", error);
     return "";
   }
 };
