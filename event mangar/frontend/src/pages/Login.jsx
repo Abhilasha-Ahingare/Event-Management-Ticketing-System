@@ -6,7 +6,7 @@ import api from "../context/utils/api";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser, StoreToken } = UserAuth();
+  const { setUser, StoreToken, user } = UserAuth();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -17,7 +17,11 @@ const Login = () => {
       setUser(data.user);
 
       alert("Login successful!");
-      navigate("/");
+      if (user.role === "user") {
+        navigate("/");
+      } else if (user.role === "organizer") {
+        navigate("/organizer");
+      }
     } catch (err) {
       alert(err.response?.data?.message || "Login failed. Try again.");
       console.error("Login failed:", err);
@@ -31,7 +35,9 @@ const Login = () => {
         className="w-full max-w-md bg-white rounded-xl shadow-xl p-8 border"
       >
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-blue-700 mb-2">Welcome Back! 💬</h2>
+          <h2 className="text-3xl font-bold text-blue-700 mb-2">
+            Welcome Back! 💬
+          </h2>
           <p className="text-gray-600 uppercase tracking-wide text-sm">
             Login to your account
           </p>
@@ -39,7 +45,9 @@ const Login = () => {
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold mb-2 uppercase">Email</label>
+            <label className="block text-sm font-semibold mb-2 uppercase">
+              Email
+            </label>
             <input
               type="email"
               value={email}
@@ -50,7 +58,9 @@ const Login = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold mb-2 uppercase">Password</label>
+            <label className="block text-sm font-semibold mb-2 uppercase">
+              Password
+            </label>
             <input
               type="password"
               value={password}
@@ -71,7 +81,10 @@ const Login = () => {
 
         <div className="mt-6 text-center text-sm text-gray-700">
           Don't have an account?{" "}
-          <Link to="/registration" className="text-blue-600 hover:underline font-semibold">
+          <Link
+            to="/registration"
+            className="text-blue-600 hover:underline font-semibold"
+          >
             Register
           </Link>
         </div>

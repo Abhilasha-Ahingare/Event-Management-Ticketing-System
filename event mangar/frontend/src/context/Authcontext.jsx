@@ -62,8 +62,6 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         // console.log("Fetched tickets array:", response.data.tickets);
         setTicket(response.data.tickets);
-        // Optionally, log the updated state
-        // setTimeout(() => console.log("Updated ticket state:", ticket), 0);
       }
     } catch (error) {}
   };

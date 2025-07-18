@@ -11,12 +11,8 @@ import Footer from "./components/Footer";
 import ProtectRoutes from "./ProtectRoutes";
 import EventsCard from "./components/EventsCard";
 import PaymentSuccess from "./pages/PaymentSuccess";
-// import PaymentCancel from "./pages/PaymentCancel";
-// import { UserAuth } from "./context/Authcontext";
 
 function App() {
-  // const { user , setUser } = UserAuth();
-  // console.log( setUser)
   return (
     <>
       <Navbar />
@@ -24,7 +20,7 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectRoutes role={["user", "organizer", "admin"]}>
+            <ProtectRoutes role="user">
               <Home />
             </ProtectRoutes>
           }

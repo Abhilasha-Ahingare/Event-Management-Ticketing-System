@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { useState } from "react";
 import { UserAuth } from "../context/Authcontext";
@@ -7,7 +7,6 @@ import { UserAuth } from "../context/Authcontext";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = UserAuth();
-
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-3  shadow  transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700">
@@ -51,7 +50,7 @@ const Navbar = () => {
           </>
         ) : user.role === "organizer" ? (
           <>
-            <Link to="/organizer">Organizer Dashboard</Link>
+            <Link to="/organizer">org</Link>
             <Link to="/profile">
               <FaUserCircle size={24} />
             </Link>

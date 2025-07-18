@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
+import { UserAuth } from "../context/Authcontext";
 
 const OrganizerDashBoard = () => {
-  return (
-    <div>OrganizerDashBoard</div>
-  )
-}
+   UserAuth();
 
-export default OrganizerDashBoard
+  return <div>OrganizerDashBoard</div>;
+};
+
+export default OrganizerDashBoard;
