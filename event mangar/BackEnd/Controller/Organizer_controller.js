@@ -5,8 +5,8 @@ const GetOrganizerStats = async (req, res) => {
   try {
     const events = await Events.find({ organizer: req.user._id });
 
-    let totalTicketSold = 0;
-    let totalRevenue = 0;
+    let totalTicketSold = 400;
+    let totalRevenue = 100;
     for (const event of events) {
       const tickets = await Ticket.find({
         event: event._id,

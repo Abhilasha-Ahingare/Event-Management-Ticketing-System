@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken("");
     setUser("");
+    setTicket([]); 
     localStorage.removeItem("token");
   };
 
@@ -66,7 +67,6 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {}
   };
-
 
   useEffect(() => {
     if (token) {

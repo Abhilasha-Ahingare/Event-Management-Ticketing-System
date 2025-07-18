@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { useState } from "react";
 import { UserAuth } from "../context/Authcontext";
@@ -7,6 +7,7 @@ import { UserAuth } from "../context/Authcontext";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user } = UserAuth();
+
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-3  shadow  transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700">
@@ -20,7 +21,14 @@ const Navbar = () => {
           <span className="text-2xl font-bold">EventCo</span>
         </Link>
 
-        {user.role === "user" ? (
+        {!user ? (
+          <Link
+            to="/login"
+            className="hover:bg-green-900 transition bg-green-800 text-shadow-white p-2 pl-5 pr-5 rounded-lg  text-center cursor-pointer"
+          >
+            login
+          </Link>
+        ) : user.role === "user" ? (
           <>
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className="hover:text-yellow-300 transition">
@@ -41,26 +49,17 @@ const Navbar = () => {
               </Link>
             </div>
           </>
-        ) : (
-          <Link
-            to="/login"
-            className="hover:bg-purple-400 transition bg-purple-300 text-black p-2 pl-5 pr-5 rounded-lg  text-center cursor-pointer"
-          >
-            login
-          </Link>
-        )}
+        ) : user.role === "organizer" ? (
+          <>
+            <Link to="/organizer">Organizer Dashboard</Link>
+            <Link to="/profile">
+              <FaUserCircle size={24} />
+            </Link>
+          </>
+        ) : null}
 
         {/* Mobile menu button and profile icon for logged-in users */}
         <div className="md:hidden flex items-center">
-          {/* {user.role === "user" && (
-            <Link
-              to="/profile"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-2 hover:text-yellow-300 transition"
-            >
-              <FaUserCircle size={20} />
-            </Link>
-          )} */}
           <button onClick={() => setMenuOpen(!menuOpen)}>
             <FaBars size={24} />
           </button>
