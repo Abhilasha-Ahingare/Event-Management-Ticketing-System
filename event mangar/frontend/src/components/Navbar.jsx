@@ -50,7 +50,7 @@ const Navbar = () => {
           </>
         ) : user.role === "organizer" ? (
           <>
-            <Link to="/organizer">org</Link>
+            <Link to="/dashboard">org</Link>
             <Link to="/profile">
               <FaUserCircle size={24} />
             </Link>
@@ -122,5 +122,4 @@ const Navbar = () => {
     </nav>
   );
 };
-
 export default Navbar;

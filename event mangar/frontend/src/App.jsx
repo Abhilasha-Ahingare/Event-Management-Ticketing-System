@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -17,36 +17,40 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectRoutes role="user">
-              <Home />
-            </ProtectRoutes>
-          }
-        />
+       
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Register />} />
         <Route path="/event" element={<EventsCard />} />
         <Route path="/event-detail/:id" element={<EventDetail />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
+
+        {/* Protected Routes */}
+        <Route
+          path="/home"
+          element={
+            <ProtectRoutes role={["user"]}>
+              <Home />
+            </ProtectRoutes>
+          }
+        />
         <Route
           path="/tickets"
           element={
-            <ProtectRoutes role="user">
+            <ProtectRoutes role={["user"]}>
               <MyTickets />
             </ProtectRoutes>
           }
         />
         <Route
-          path="/organizer"
+          path="/dashboard"
           element={
-            <ProtectRoutes role="organizer">
+            <ProtectRoutes role={["organizer"]}>
               <OrganizerDashBoard />
             </ProtectRoutes>
           }
         />
-        {/* <Route path="/payment-cancel" element={<PaymentCancel />} /> */}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

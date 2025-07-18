@@ -6,27 +6,29 @@ import api from "../context/utils/api";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser, StoreToken, user } = UserAuth();
+  const { setUser, StoreToken } = UserAuth();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await api.post(`/auth/login`, { email, password });
-      StoreToken(data.token);
-      setUser(data.user);
+  e.preventDefault();
+  try {
+    const { data } = await api.post(`/auth/login`, { email, password });
+    StoreToken(data.token);
+    setUser(data.user);
 
-      alert("Login successful!");
-      if (user.role === "user") {
-        navigate("/");
-      } else if (user.role === "organizer") {
-        navigate("/organizer");
-      }
-    } catch (err) {
-      alert(err.response?.data?.message || "Login failed. Try again.");
-      console.error("Login failed:", err);
+    alert("Login successful!");
+
+    if (data.user.role === "organizer") {
+      navigate("/dashboard");
+    } else {
+      navigate("/home");
     }
-  };
+  } catch (err) {
+    alert(err.response?.data?.message || "Login failed. Try again.");
+    console.error("Login failed:", err);
+  }
+};
+
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-purple-100 px-4">

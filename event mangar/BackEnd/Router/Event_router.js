@@ -12,19 +12,17 @@ const protect = require("../Middleware/user_protect_middleware");
 const EventProtect = require("../Middleware/Event_protect_middleware");
 const adminProtect = require("../Middleware/admin_middleware");
 
-// public router
-router.get("/get-all-event", protect, EventProtect, adminProtect, getEvents);
+// 👇 Public route - remove all protection
+router.get("/get-all-event", getEvents);
+
+// 👇 Anyone can view an event
 router.get("/event-detail/:id", getEventById);
 
-//protected for organizers
+// 👇 Organizer only
 router.post("/create-event", protect, EventProtect, createEvent);
 router.put("/update-event/:id", protect, EventProtect, updateEvent);
-router.delete(
-  "/delete-event/:id",
-  protect,
-  EventProtect,
-  adminProtect,
-  deleteEvent
-);
+
+// 👇 Only Admin can delete event
+router.delete("/delete-event/:id", protect, adminProtect, deleteEvent);
 
 module.exports = router;

@@ -5,6 +5,8 @@ import EventsCard from "../components/EventsCard";
 
 const Home = () => {
   const { isLoading } = UserAuth();
+  UserAuth()
+
   if (isLoading) {
     return (
       <div className="h-screen flex justify-center items-center">

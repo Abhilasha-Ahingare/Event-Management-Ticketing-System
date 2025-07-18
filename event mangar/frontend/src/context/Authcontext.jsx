@@ -21,17 +21,14 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setToken("");
     setUser("");
-    setTicket([]); 
+    setTicket([]);
     localStorage.removeItem("token");
   };
 
   const UserAuthentication = async () => {
     try {
       setIsLoading(true);
-      const response = await api.get(`/auth/user`, {
-        headers: { Authorization: authorization },
-        withCredentials: true,
-      });
+      const response = await api.get(`/auth/user`);
       if (response.status === 200) {
         // console.log(response.data.user);
         setUser(response.data.user);
@@ -94,6 +91,5 @@ export const AuthProvider = ({ children }) => {
     </Authcontext.Provider>
   );
 };
-
 export const UserAuth = () => useContext(Authcontext);
 export default Authcontext;

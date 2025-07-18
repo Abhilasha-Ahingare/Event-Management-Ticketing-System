@@ -13,7 +13,7 @@ const router = express.Router();
 router.post("/registration", Registration);
 router.post("/login", login);
 
-router.get("/user", protect, EventProtect, adminProtect, UserProfile);
+router.get("/user", protect, UserProfile);
 // router.put("")
 // router.delete("")
 
