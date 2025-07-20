@@ -5,7 +5,7 @@ import EventsCard from "../components/EventsCard";
 
 const Home = () => {
   const { isLoading } = UserAuth();
-  UserAuth()
+  // UserAuth()
 
   if (isLoading) {
     return (

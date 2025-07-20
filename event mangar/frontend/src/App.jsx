@@ -17,8 +17,14 @@ function App() {
     <>
       <Navbar />
       <Routes>
-       
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route
+          path="/"
+          element={
+            <ProtectRoutes role={["user"]}>
+              <Home />
+            </ProtectRoutes>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/registration" element={<Register />} />
         <Route path="/event" element={<EventsCard />} />
@@ -26,14 +32,6 @@ function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
 
         {/* Protected Routes */}
-        <Route
-          path="/home"
-          element={
-            <ProtectRoutes role={["user"]}>
-              <Home />
-            </ProtectRoutes>
-          }
-        />
         <Route
           path="/tickets"
           element={

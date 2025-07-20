@@ -10,25 +10,19 @@ const Login = () => {
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
-  e.preventDefault();
-  try {
-    const { data } = await api.post(`/auth/login`, { email, password });
-    StoreToken(data.token);
-    setUser(data.user);
+    e.preventDefault();
+    try {
+      const { data } = await api.post(`/auth/login`, { email, password });
+      StoreToken(data.token);
+      setUser(data.user);
 
-    alert("Login successful!");
-
-    if (data.user.role === "organizer") {
-      navigate("/dashboard");
-    } else {
-      navigate("/home");
+      alert("Login successful!");
+      navigate(data.user.role === "organizer" ? "/dashboard" : "/");
+    } catch (err) {
+      alert(err.response?.data?.message || "Login failed. Try again.");
+      console.error("Login failed:", err);
     }
-  } catch (err) {
-    alert(err.response?.data?.message || "Login failed. Try again.");
-    console.error("Login failed:", err);
-  }
-};
-
+  };
 
   return (
     <div className="w-full min-h-screen flex justify-center items-center bg-gradient-to-br from-blue-50 to-purple-100 px-4">

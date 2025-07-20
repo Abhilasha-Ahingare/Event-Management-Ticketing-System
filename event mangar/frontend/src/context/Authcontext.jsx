@@ -5,7 +5,7 @@ const Authcontext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [events, setEvents] = useState([]);
   const [ticket, setTicket] = useState([]);
@@ -13,9 +13,9 @@ export const AuthProvider = ({ children }) => {
   const authorization = `Bearer ${token}`;
   const isLogIn = !!token;
 
-  const StoreToken = (serverToken) => {
-    setToken(serverToken);
-    localStorage.setItem("token", serverToken);
+  const StoreToken = (token) => {
+    setToken(token);
+    localStorage.setItem("token", token);
   };
 
   const logout = () => {
@@ -26,18 +26,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const UserAuthentication = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await api.get(`/auth/user`);
       if (response.status === 200) {
-        // console.log(response.data.user);
         setUser(response.data.user);
       }
-      setIsLoading(false);
     } catch (error) {
       console.log("🚫 Error fetching user:", error);
       logout();
-      setIsLoading(false);
+    } finally {
+      setIsLoading(false); 
     }
   };
 
