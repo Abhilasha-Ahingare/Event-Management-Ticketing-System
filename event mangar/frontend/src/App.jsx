@@ -13,6 +13,7 @@ import ProtectRoutes from "./ProtectRoutes";
 import EventsCard from "./components/EventsCard";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import CreateEvent from "./Dashboard/organizer/CreateEvent";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/event" element={<EventsCard />} />
         <Route path="/event-detail/:id" element={<EventDetail />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Protected Routes */}
         <Route

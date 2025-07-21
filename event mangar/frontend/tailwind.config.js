@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        fadeIn: "fadeIn 0.6s ease-in-out",
+        fadeIn: "fadeIn 0.6s ease-in-out forwards",       // ← Added `forwards`
         slideInLeft: "slideInLeft 0.6s ease-in-out",
         slideInRight: "slideInRight 0.6s ease-in-out",
       },

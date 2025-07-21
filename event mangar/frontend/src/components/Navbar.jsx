@@ -50,7 +50,7 @@ const Navbar = () => {
           </>
         ) : user.role === "organizer" ? (
           <>
-            <Link to="/dashboard">org</Link>
+            <Link to="/dashboard"></Link>
             <Link to="/profile">
               <FaUserCircle size={24} />
             </Link>
@@ -112,7 +112,7 @@ const Navbar = () => {
             <Link
               to="/login"
               onClick={() => setMenuOpen(false)}
-              className="hover:text-yellow-300 transition bg-purple-300 text-black px-4 py-2 rounded"
+              className="hover:bg-green-900 transition bg-green-800 text-shadow-white p-2 pl-5 pr-5 rounded-lg  text-center cursor-pointer"
             >
               login
             </Link>
