@@ -26,7 +26,7 @@ const MyEvents = () => {
     }
   };
 
-  const EventEdit = () => navigate("/create-event");
+  const EventEdit = (eventId) => navigate(`/update-event/${eventId}`);
 
   return (
     <section className="w-full h-auto px-4 py-6 mt-6">
@@ -60,10 +60,10 @@ const MyEvents = () => {
                   <td className="py-4 px-4">₹ {events.price}</td>
                   <td className="py-4 px-4">
                     <span
-                      className={`inline-block bg-green-700 text-gray-200 px-3 py-1 text-xs rounded-full font-semibold text-center ${
+                      className={`inline-block bg-blue-900 text-gray-200 px-3 py-1 text-xs rounded-full font-semibold text-center ${
                         ticket.paymentStatus === "paid"
                           ? "bg-red-500 text-black"
-                          : "bg-green-500 text-black"
+                          : "bg-blue-950 text-black"
                       }`}
                     >
                       {ticket.paymentStatus === "paid" ? (
@@ -75,13 +75,15 @@ const MyEvents = () => {
                   </td>
                   <td className="py-4 px-4 flex items-center justify-center gap-4 text-xl text-gray-600">
                     <button
-                      onClick={EventEdit}
+                      type="button"
+                      onClick={() => EventEdit(events._id)}
                       title="Edit"
                       className="hover:text-blue-600 transition"
                     >
                       <FiEdit />
                     </button>
                     <button
+                      type="button"
                       onClick={() => EventDeleted(events._id)}
                       title="Delete"
                       className="hover:text-red-600 transition"

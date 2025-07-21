@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -50,8 +50,9 @@ function App() {
             </ProtectRoutes>
           }
         />
-        
+
         <Route path="/create-Event" element={<CreateEvent />} />
+        <Route path="/update-event/:id" element={<CreateEvent />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

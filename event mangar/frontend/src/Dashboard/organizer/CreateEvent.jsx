@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import api from "../../context/utils/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const CreateEvent = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
+  // console.log("ID from URL:", id);
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -22,7 +24,6 @@ const CreateEvent = () => {
   const [image, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  // 🌟 Prefill if editing
   useEffect(() => {
     if (id) {
       const fetchEvent = async () => {
@@ -90,8 +91,9 @@ const CreateEvent = () => {
         withCredentials: true,
       });
 
-      if (response.status === 201 || response.status === 200) {
+      if (response.status === 200) {
         alert("Event created successfully!");
+        navigate(`/event`);
       }
     } catch (error) {
       console.error("Error creating event:", error);
@@ -117,6 +119,7 @@ const CreateEvent = () => {
 
       if (response.status === 200) {
         alert("Event updated successfully!");
+        navigate(`/event`);
       }
     } catch (error) {
       console.error("Error updating event:", error);
