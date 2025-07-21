@@ -17,6 +17,7 @@ const eventSchema = new Schema(
       ref: "User",
       required: true,
     },
+    organizerName: { type: String, required: true },
   },
   { timestamps: true }
 );

@@ -2,9 +2,9 @@ import { Navigate } from "react-router-dom";
 import { UserAuth } from "../context/Authcontext";
 
 const ProtectRoutes = ({ children, role }) => {
-  const { user, isLoading } = UserAuth();
+  const { user, isLoading, isLogIn } = UserAuth();
 
-  // 👇 Important: Don't render anything while loading
+  // ✅ Important: Wait until loading finishes
   if (isLoading) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -13,14 +13,14 @@ const ProtectRoutes = ({ children, role }) => {
     );
   }
 
-  // 👇 If not logged in
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  // ✅ Redirect if not logged in
+  if (!isLogIn || !user) {
+    return <Navigate to="/login" />;
   }
 
-  // 👇 If user has wrong role
+  // ✅ Check role match (if any)
   if (role && !role.includes(user.role)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/login" />;
   }
 
   return children;

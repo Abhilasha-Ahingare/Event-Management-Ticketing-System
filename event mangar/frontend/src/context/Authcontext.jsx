@@ -26,7 +26,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const UserAuthentication = async () => {
-    setIsLoading(true);
     try {
       const response = await api.get(`/auth/user`);
       if (response.status === 200) {
@@ -34,9 +33,8 @@ export const AuthProvider = ({ children }) => {
       }
     } catch (error) {
       console.log("🚫 Error fetching user:", error);
-      logout();
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -59,8 +57,11 @@ export const AuthProvider = ({ children }) => {
         // console.log("Fetched tickets array:", response.data.tickets);
         setTicket(response.data.tickets);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("ticket error", error);
+    }
   };
+
 
   useEffect(() => {
     if (token) {

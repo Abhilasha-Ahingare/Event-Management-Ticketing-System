@@ -14,6 +14,7 @@ const createEvent = async (req, res) => {
       category,
       image,
       details,
+      organizerName,
     } = req.body;
 
     const createEvents = await Event.create({
@@ -27,6 +28,7 @@ const createEvent = async (req, res) => {
       category,
       image,
       details,
+      organizerName,
       organizer: req.user._id,
     });
 
@@ -80,6 +82,7 @@ const updateEvent = async (req, res) => {
       ticketsSold,
       category,
       image,
+      organizerName,
       details,
     } = req.body;
 
@@ -105,6 +108,7 @@ const updateEvent = async (req, res) => {
         category,
         image,
         details,
+        organizerName,
         organizer: req.user._id,
       },
       { new: true, runValidators: true }

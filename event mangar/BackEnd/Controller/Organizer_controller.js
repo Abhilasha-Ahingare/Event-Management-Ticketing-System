@@ -6,7 +6,7 @@ const GetOrganizerStats = async (req, res) => {
     const events = await Events.find({ organizer: req.user._id });
 
     let totalTicketSold = 400;
-    let totalRevenue = 100;
+    let totalRevenue = "10,000";
     for (const event of events) {
       const tickets = await Ticket.find({
         event: event._id,
@@ -19,11 +19,11 @@ const GetOrganizerStats = async (req, res) => {
       totalRevenue += revenue;
     }
 
+    const data = { totalEvents: events.length, totalTicketSold, totalRevenue };
+
     res.status(200).json({
       success: true,
-      totalEvents: events.length,
-      totalTicketSold,
-      totalRevenue,
+      data,
     });
   } catch (error) {
     console.error("Organizer stats error:", error);

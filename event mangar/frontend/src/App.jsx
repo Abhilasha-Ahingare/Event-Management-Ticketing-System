@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import ProtectRoutes from "./ProtectRoutes";
 import EventsCard from "./components/EventsCard";
 import PaymentSuccess from "./pages/PaymentSuccess";
+import CreateEvent from "./Dashboard/organizer/CreateEvent";
 
 function App() {
   return (
@@ -48,7 +49,8 @@ function App() {
             </ProtectRoutes>
           }
         />
-
+        
+        <Route path="/create-event" element={<CreateEvent />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
