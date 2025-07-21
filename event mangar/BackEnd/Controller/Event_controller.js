@@ -12,10 +12,13 @@ const createEvent = async (req, res) => {
       maxTickets,
       ticketsSold,
       category,
-      image,
       details,
       organizerName,
     } = req.body;
+
+   const imageUrl = req.file
+  ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
+  : "";
 
     const createEvents = await Event.create({
       title,
@@ -26,19 +29,21 @@ const createEvent = async (req, res) => {
       maxTickets,
       ticketsSold,
       category,
-      image,
+      image: imageUrl,
       details,
       organizerName,
       organizer: req.user._id,
     });
 
-    return res
-      .status(200)
-      .json({ message: "Event created successfully", event: createEvents });
+    return res.status(200).json({
+      message: "Event created successfully",
+      createEvents,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to create event", error: error.message });
+    res.status(500).json({
+      message: "Failed to create event",
+      error: error.message,
+    });
   }
 };
 
@@ -93,6 +98,7 @@ const updateEvent = async (req, res) => {
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
     }
+    const imageUrl = req.file ? req.file.filename :  "default.jpg";;
 
     // Now update
     const updatedEvent = await Event.findByIdAndUpdate(
@@ -106,7 +112,7 @@ const updateEvent = async (req, res) => {
         maxTickets,
         ticketsSold,
         category,
-        image,
+        image: imageUrl,
         details,
         organizerName,
         organizer: req.user._id,
