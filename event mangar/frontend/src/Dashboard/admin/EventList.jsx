@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import MyEvents from "../organizer/MyEvents";
 
 const EventList = () => {
   return (
-    <div>EventList</div>
-  )
-}
+    <div className="mt-6">
+      <MyEvents />
+    </div>
+  );
+};
 
-export default EventList
+export default EventList;

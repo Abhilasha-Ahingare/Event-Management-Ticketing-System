@@ -86,12 +86,18 @@ const Profile = () => {
         </form>
 
         {/* Logout Button */}
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-4">
           <Button
             onClick={logouthandler}
             className="bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-transform duration-200"
           >
             Logout
+          </Button>
+          <Button
+            onClick={logouthandler}
+            className="bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-transform duration-200"
+          >
+            Edit
           </Button>
         </div>
       </div>

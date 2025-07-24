@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { UserAuth } from "../context/Authcontext";
 
+
 const ProtectRoutes = ({ children, role }) => {
   const { user, isLoading, isLogIn } = UserAuth();
 

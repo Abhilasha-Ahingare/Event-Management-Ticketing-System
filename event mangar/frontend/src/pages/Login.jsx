@@ -6,7 +6,7 @@ import api from "../context/utils/api";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser, StoreToken } = UserAuth();
+  const { setUser, StoreToken, isLogIn } = UserAuth();
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
@@ -17,7 +17,11 @@ const Login = () => {
       setUser(data.user);
 
       alert("Login successful!");
-      navigate(data.user.role === "organizer" ? "/dashboard" : "/");
+      if (isLogIn && user) {
+        if (user.role === "admin") navigate("/get_admin");
+        else if (user.role === "organizer") navigate("/dashboard");
+        else navigate("/home");
+      }
     } catch (err) {
       alert(err.response?.data?.message || "Login failed. Try again.");
       console.error("Login failed:", err);

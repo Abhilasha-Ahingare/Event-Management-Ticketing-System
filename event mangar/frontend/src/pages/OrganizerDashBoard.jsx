@@ -30,7 +30,23 @@ const OrganizerDashBoard = () => {
     };
     OrganizerDashBoard();
   }, []);
-
+  
+    // 🔄 Fetch users on mount
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const res = await api.get(`/auth/get-all-user`);
+          // console.log(res.data.users);
+          setUsers(res.data.users || []);
+          setLoading(false);
+        } catch (error) {
+          console.error("Failed to fetch users", error);
+          setLoading(false);
+        }
+      };
+  
+      fetchUsers();
+    }, []);
   const EventCreateHandle = () => navigate("/create-event");
 
   return (

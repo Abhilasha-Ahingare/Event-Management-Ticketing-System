@@ -1,4 +1,4 @@
-import React from "react"; 
+import React from "react";
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../context/utils/api";
 
@@ -62,7 +62,6 @@ export const AuthProvider = ({ children }) => {
       console.error("ticket error", error);
     }
   };
-
 
   useEffect(() => {
     if (token) {

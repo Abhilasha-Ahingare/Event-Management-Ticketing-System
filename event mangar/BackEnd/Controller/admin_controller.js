@@ -11,12 +11,10 @@ const getAdminStats = async (req, res) => {
     const totalTicketSold = tickets.reduce((acc, t) => acc + t.quantity, 0);
     const totalRevenue = tickets.reduce((acc, t) => acc + t.totalPrice, 0);
 
+    const admindata = [totalUser, totalEvents, totalTicketSold, totalRevenue];
+
     res.status(200).json({
-      message: "admin sucessfully come",
-      totalUser,
-      totalEvents,
-      totalTicketSold,
-      totalRevenue,
+      message: "admin sucessfully come",admindata
     });
   } catch (error) {
     console.error("Admin stats error:", err);

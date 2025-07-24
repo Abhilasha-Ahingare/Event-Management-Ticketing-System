@@ -3,6 +3,9 @@ const {
   Registration,
   login,
   UserProfile,
+  GetAllUser,
+  updateUser,
+  deleteUser,
 } = require("../Controller/User_controller");
 
 const protect = require("../Middleware/user_protect_middleware");
@@ -14,7 +17,8 @@ router.post("/registration", Registration);
 router.post("/login", login);
 
 router.get("/user", protect, UserProfile);
-// router.put("")
-// router.delete("")
+router.get("/get-all-user", protect, adminProtect, GetAllUser);
+router.put("/update-user", protect, adminProtect, updateUser);
+router.delete("/delete-user/:id", protect, adminProtect, deleteUser);
 
 module.exports = router;

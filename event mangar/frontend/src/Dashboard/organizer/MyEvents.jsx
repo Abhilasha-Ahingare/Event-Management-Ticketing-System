@@ -6,14 +6,10 @@ import api from "../../context/utils/api";
 import { useNavigate } from "react-router-dom";
 
 const MyEvents = () => {
-  const { events, ticket } = UserAuth();
+  const { events, ticket, user } = UserAuth();
   const navigate = useNavigate();
 
   const EventDeleted = async (eventId) => {
-    // const confirmed = window.confirm(
-    //   "Are you sure you want to delete this event?"
-    // );
-    // if (!confirmed) return;
 
     try {
       const response = await api.delete(`/event/delete-event/${eventId}`);
@@ -26,7 +22,13 @@ const MyEvents = () => {
     }
   };
 
-  const EventEdit = (eventId) => navigate(`/update-event/${eventId}`);
+  const EventEdit = (eventId) => {
+    if (user.role === "organizer") {
+      navigate(`/update-event/${eventId}`);
+    } else {
+      alert("user not organizer");
+    }
+  };
 
   return (
     <section className="w-full h-auto px-4 py-6 mt-6">
