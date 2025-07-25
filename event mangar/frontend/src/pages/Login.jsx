@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/Authcontext";
 import api from "../context/utils/api";
-
+import { toast } from "react-toastify";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,14 +16,12 @@ const Login = () => {
       StoreToken(data.token);
       setUser(data.user);
 
-      alert("Login successful!");
-      if (isLogIn && user) {
-        if (user.role === "admin") navigate("/get_admin");
-        else if (user.role === "organizer") navigate("/dashboard");
-        else navigate("/home");
-      }
+      toast.success("Login successful!");
+      if (user.role === "admin") navigate("/get_admin");
+      else if (user.role === "organizer") navigate("/dashboard");
+      else navigate("/home");
     } catch (err) {
-      alert(err.response?.data?.message || "Login failed. Try again.");
+      // toast.error(err.response?.data?.message || "Login failed. Try again.");
       console.error("Login failed:", err);
     }
   };

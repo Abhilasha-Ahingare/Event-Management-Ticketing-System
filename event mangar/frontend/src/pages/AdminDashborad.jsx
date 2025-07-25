@@ -44,7 +44,7 @@ const AdminDashboard = () => {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="absolute top-10 left-75 z-50 md:hidden text-3xl text-gray-900"
+        className="absolute top-6 left-4 sm:left-6 md:left-10 z-50 md:hidden text-gray-900 text-2xl sm:text-3xl md:text-4xl transition-transform duration-200"
       >
         {sidebarOpen ? <HiX /> : <HiMenuAlt3 />}
       </button>

@@ -57,7 +57,7 @@ function App() {
         <Route
           path="/profile"
           element={
-            <ProtectRoutes role={["user"]}>
+            <ProtectRoutes role={["user","organizer","admin"]}>
               <Profile />
             </ProtectRoutes>
           }

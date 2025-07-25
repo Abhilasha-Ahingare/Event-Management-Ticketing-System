@@ -18,7 +18,7 @@ router.post("/login", login);
 
 router.get("/user", protect, UserProfile);
 router.get("/get-all-user", protect, adminProtect, GetAllUser);
-router.put("/update-user", protect, adminProtect, updateUser);
+router.put("/update-user", protect, EventProtect, adminProtect, updateUser);
 router.delete("/delete-user/:id", protect, adminProtect, deleteUser);
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { UserAuth } from "../context/Authcontext";
+import logo2 from "../assets/logo2.jpg"
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,16 +33,16 @@ const Navbar = () => {
   const roleLinks = role ? linksByRole[role] : [];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gradient-to-b from-[#357291] to-[#1b3c57] text-white font-semibold py-3 shadow">
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-b from-[#4f6d8b] to-[#203447] text-white/90 font-semibold py-3 shadow">
       <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img
-            src="/logo192.png"
+            src={logo2}
             alt="Logo"
             className="h-10 w-10 rounded-full shadow-md"
           />
-          <span className="text-2xl font-bold">EventCo</span>
+          <span className="text-2xl text-gray-200 font-bold">EventCo</span>
         </Link>
 
         {/* Desktop Nav */}

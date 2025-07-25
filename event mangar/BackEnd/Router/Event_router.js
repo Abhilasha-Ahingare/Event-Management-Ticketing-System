@@ -36,6 +36,6 @@ router.put(
 );
 
 // 👇 Only Admin can delete event
-router.delete("/delete-event/:id", protect, adminProtect, deleteEvent);
+router.delete("/delete-event/:id", protect, EventProtect, deleteEvent);
 
 module.exports = router;

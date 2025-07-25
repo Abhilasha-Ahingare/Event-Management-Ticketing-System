@@ -131,13 +131,13 @@ const updateUser = async (req, res) => {
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { Username, email, role },
+      { Username, email },
       { new: true, runValidators: true } 
     ).select("-password");
 
     res.status(200).json({
       message: "User updated successfully",
-      user: updatedUser,
+     updatedUser,
     });
   } catch (error) {
     return res.status(500).json({ message: "Server error", error });
