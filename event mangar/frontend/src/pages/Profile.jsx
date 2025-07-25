@@ -25,11 +25,11 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#1e293b] via-[#334155] to-[#475569] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-[#576475] via-[#334155] to-[#4b6679] flex items-center justify-center p-4">
       <div className="animate-fadeIn w-full max-w-md bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl p-8 space-y-6 transition-all duration-300 hover:scale-[0.98]">
         {/* Avatar */}
         <div
-          className={`w-20 h-20 mx-auto rounded-full shadow-md flex items-center justify-center text-3xl font-bold uppercase bg-gray-500/55 text-gray-900`}
+          className={`w-20 h-20 mx-auto rounded-full shadow-md flex items-center justify-center text-3xl font-bold uppercase bg-gray-500/55 text-gray-300`}
         >
           {user?.Username?.slice(0, 1) || "U"}
         </div>
@@ -89,13 +89,13 @@ const Profile = () => {
         <div className="flex justify-center gap-4">
           <Button
             onClick={logouthandler}
-            className="bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-transform duration-200"
+            className="bg-gradient-to-r from-gray-700 to-sky-700 text-white font-semibold py-3 px-8 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:to-sky-800 focus:outline-none focus:ring-2 focus:ring-green-700"
           >
             Logout
           </Button>
           <Button
             onClick={logouthandler}
-            className="bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:scale-105 hover:brightness-110 transition-transform duration-200"
+            className="bg-gradient-to-r from-gray-700 to-sky-700 text-white font-semibold py-3 px-8 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:to-sky-800 focus:outline-none focus:ring-2 focus:ring-green-700"
           >
             Edit
           </Button>

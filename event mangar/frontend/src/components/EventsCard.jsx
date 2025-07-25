@@ -69,7 +69,7 @@ const EventsCard = () => {
               </CardContent>
               <CardFooter className="px-6 pb-6">
                 <Button
-                  className="w-full bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 px-8 rounded-xl shadow hover:scale-105 transition-transform duration-200 hover:bg-green-950 focus:outline-none focus:ring-2 focus:ring-green-700"
+                  className="bg-gradient-to-r from-gray-800 to-sky-600 text-white font-semibold py-3 px-6 rounded-xl shadow hover:scale-105 transition-transform duration-200 mt-4 focus:outline-none focus:ring-2 focus:ring-green-700 w-full"
                   onClick={() => buttonhandle(event._id)}
                 >
                   Get Events

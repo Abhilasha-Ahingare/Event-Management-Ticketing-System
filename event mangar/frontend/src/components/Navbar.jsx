@@ -15,7 +15,7 @@ const Navbar = () => {
       { to: "/", label: "Home" },
       { to: "/event", label: "Events" },
       { to: "/tickets", label: "Tickets" },
-      { to: "/about", label: "About" },
+      { to: "/home", label: "About" },
       { to: "/profile", label: <FaUserCircle size={24} /> },
     ],
     organizer: [
@@ -32,7 +32,7 @@ const Navbar = () => {
   const roleLinks = role ? linksByRole[role] : [];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-gray-800 to-green-900 text-white font-semibold py-3 shadow">
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-b from-[#357291] to-[#1b3c57] text-white font-semibold py-3 shadow">
       <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
@@ -49,7 +49,7 @@ const Navbar = () => {
           {!user ? (
             <Link
               to="/login"
-              className="bg-green-800 hover:bg-green-900 px-4 py-2 rounded-lg transition"
+              className="bg-gray-700 hover:bg-gray-800 px-4 py-2 rounded-lg transition"
             >
               Login
             </Link>
@@ -58,7 +58,7 @@ const Navbar = () => {
               <Link
                 key={i}
                 to={to}
-                className="hover:text-yellow-300 transition"
+                className="hover:text-gray-300 transition"
               >
                 {label}
               </Link>
@@ -81,7 +81,7 @@ const Navbar = () => {
             <Link
               to="/login"
               onClick={toggleMenu}
-              className="bg-green-800 text-white px-4 py-2 rounded-md text-center hover:bg-green-900 transition"
+              className="bg-gray-800 text-white px-4 py-2 rounded-md text-center hover:bg-gray-900 transition"
             >
               Login
             </Link>
@@ -91,7 +91,7 @@ const Navbar = () => {
                 key={i}
                 to={to}
                 onClick={toggleMenu}
-                className="hover:text-yellow-300 transition"
+                className="hover:text-gray-300 transition"
               >
                 {typeof label === "string" ? label : <span className="flex items-center gap-2">{label}<span>Profile</span></span>}
               </Link>

@@ -4,21 +4,21 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { UserAuth } from "../../context/Authcontext";
 import api from "../../context/utils/api";
 import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify"
 
 const MyEvents = () => {
   const { events, ticket, user } = UserAuth();
   const navigate = useNavigate();
 
   const EventDeleted = async (eventId) => {
-
     try {
       const response = await api.delete(`/event/delete-event/${eventId}`);
       if (response.status === 200) {
-        alert("Event deleted successfully");
+        toast.success("Event deleted successfully");
       }
     } catch (error) {
+      toast.error("Failed to delete the event");
       console.error("Delete event error", error);
-      alert("Failed to delete the event");
     }
   };
 
@@ -26,7 +26,7 @@ const MyEvents = () => {
     if (user.role === "organizer") {
       navigate(`/update-event/${eventId}`);
     } else {
-      alert("user not organizer");
+      toast.error("user not organizer");
     }
   };
 

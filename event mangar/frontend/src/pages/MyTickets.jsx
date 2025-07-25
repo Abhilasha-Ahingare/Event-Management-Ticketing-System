@@ -99,7 +99,7 @@ const MyTickets = () => {
                     </p>
 
                     <button
-                      className="bg-gradient-to-r from-gray-800 to-blue-900 text-white font-semibold py-3 px-6 rounded-xl shadow hover:scale-105 transition-transform duration-200 mt-4 focus:outline-none focus:ring-2 focus:ring-green-700 w-full"
+                      className="bg-gradient-to-r from-gray-800 to-sky-600 text-white font-semibold py-3 px-6 rounded-xl shadow hover:scale-105 transition-transform duration-200 mt-4 focus:outline-none focus:ring-2 focus:ring-green-700 w-full"
                       onClick={() => navigate(`/event-detail/${id}`)}
                     >
                       View Event
