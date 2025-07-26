@@ -44,7 +44,7 @@ const AdminDashboard = () => {
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="absolute top-6 left-4 sm:left-6 md:left-10 z-50 md:hidden text-gray-900 text-2xl sm:text-3xl md:text-4xl transition-transform duration-200"
+        className="absolute top-6 left-4 sm:right-6 md:left-10 z-50 md:hidden text-gray-900 text-2xl sm:text-3xl md:text-4xl transition-transform duration-200"
       >
         {sidebarOpen ? <HiX /> : <HiMenuAlt3 />}
       </button>
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
 
           <Button
             onClick={handleLogout}
-            className="bg-gradient-to-r from-blue-700 to-indigo-500 text-white font-semibold py-2 px-4 rounded hover:scale-105 transition w-full mt-6"
+            className="bg-gradient-to-r from-sky-700 to-sky-950 text-white font-semibold py-2 px-4 rounded hover:scale-105 transition w-full mt-6"
           >
             Logout
           </Button>

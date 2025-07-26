@@ -31,7 +31,8 @@ const MyEvents = () => {
   };
 
   return (
-    <section className="w-full h-auto px-4 py-6 mt-6">
+    
+    <section className="w-full h-auto px-4 py-6 mt-6 transition-all duration-300">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">Your Events</h2>
 
       <div className="overflow-x-auto bg-white shadow-md rounded-lg">

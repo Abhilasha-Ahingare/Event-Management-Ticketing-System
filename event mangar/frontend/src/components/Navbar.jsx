@@ -13,7 +13,7 @@ const Navbar = () => {
   // Common Links by role
   const linksByRole = {
     user: [
-      { to: "/", label: "Home" },
+      { to: "/home", label: "Home" },
       { to: "/event", label: "Events" },
       { to: "/tickets", label: "Tickets" },
       { to: "/home", label: "About" },
@@ -33,7 +33,7 @@ const Navbar = () => {
   const roleLinks = role ? linksByRole[role] : [];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gradient-to-b from-[#4f6d8b] to-[#203447] text-white/90 font-semibold py-3 shadow">
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-b from-[#171718] to-[#1d315c] text-white/90 font-semibold py-3 shadow">
       <div className="container mx-auto flex items-center justify-between px-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
