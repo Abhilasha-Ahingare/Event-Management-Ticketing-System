@@ -1,57 +1,66 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { motion } from "framer-motion"
-import api from "../context/utils/api"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card"
-import { Button } from "../components/ui/button"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+import api from "../context/utils/api";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import { Button } from "../components/ui/button";
 
 const EventDetails = () => {
-  const { id } = useParams()
-  const [event, setEvent] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [quantity, setQuantity] = useState(1)
+  const { id } = useParams();
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchSingleEvent = async () => {
       try {
         const response = await api.get(`/event/event-detail/${id}`, {
           withCredentials: true,
-        })
+        });
         if (response.status === 200) {
-          setEvent(response.data.singleEvent)
-          setLoading(false)
+          setEvent(response.data.singleEvent);
+          setLoading(false);
         }
       } catch (error) {
-        console.log("error fetching single event", error)
-        setLoading(false)
+        console.log("error fetching single event", error);
+        setLoading(false);
       }
-    }
-    fetchSingleEvent()
-  }, [id])
+    };
+    fetchSingleEvent();
+  }, [id]);
 
   const handleByTicket = async () => {
     try {
       const response = await api.post(`/payment/checkout`, {
         eventId: event._id,
         quantity,
-      })
-      window.location.href = response.data.url
+      });
+      window.location.href = response.data.url;
     } catch (error) {
-      console.error("checkout error", error)
+      console.error("checkout error", error);
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-xl font-semibold text-gray-700 animate-pulse">Loading event details...</p>
+          <p className="text-xl font-semibold text-gray-700 animate-pulse">
+            Loading event details...
+          </p>
         </div>
       </div>
-    )
+    );
   }
 
   if (!event) {
@@ -59,7 +68,12 @@ const EventDetails = () => {
       <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center">
         <div className="text-center">
           <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4 mx-auto">
-            <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="w-12 h-12 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -69,10 +83,12 @@ const EventDetails = () => {
             </svg>
           </div>
           <p className="text-xl font-semibold text-gray-700">No event found.</p>
-          <p className="text-gray-500 mt-2">The event you're looking for doesn't exist or has been removed.</p>
+          <p className="text-gray-500 mt-2">
+            The event you're looking for doesn't exist or has been removed.
+          </p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -88,17 +104,22 @@ const EventDetails = () => {
           <div className="relative w-full h-[500px] overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
             <img
-              src={event.image || "/placeholder.svg?height=500&width=1200&query=event"}
+              src={
+                event.image ||
+                "/placeholder.svg?height=500&width=1200&query=event"
+              }
               alt={event.title}
               className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
               onError={(e) => {
-                e.target.src = "/placeholder.svg?height=500&width=1200"
+                e.target.src = "/placeholder.svg?height=500&width=1200";
               }}
             />
             {/* Floating Event Badge */}
             <div className="absolute top-6 right-6 z-20">
               <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                <span className="text-sm font-semibold text-gray-800">₹{event.price}</span>
+                <span className="text-sm font-semibold text-gray-800">
+                  ₹{event.price}
+                </span>
               </div>
             </div>
           </div>
@@ -115,7 +136,9 @@ const EventDetails = () => {
                 <CardTitle className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
                   {event.title}
                 </CardTitle>
-                <CardDescription className="text-xl text-gray-600 leading-relaxed">{event.description}</CardDescription>
+                <CardDescription className="text-xl text-gray-600 leading-relaxed">
+                  {event.description}
+                </CardDescription>
               </motion.div>
             </CardHeader>
 
@@ -131,7 +154,12 @@ const EventDetails = () => {
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl border border-blue-100 hover:shadow-lg transition-all duration-300 group">
                   <div className="flex items-center mb-3">
                     <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-5 h-5 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -143,14 +171,21 @@ const EventDetails = () => {
                     <h3 className="font-semibold text-gray-800">Date & Time</h3>
                   </div>
                   <p className="text-gray-700 font-medium">{event.date}</p>
-                  <p className="text-gray-600 text-sm">{event.time || "Time TBA"}</p>
+                  <p className="text-gray-600 text-sm">
+                    {event.time || "Time TBA"}
+                  </p>
                 </div>
 
                 {/* Location */}
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border border-green-100 hover:shadow-lg transition-all duration-300 group">
                   <div className="flex items-center mb-3">
                     <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-5 h-5 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -174,7 +209,12 @@ const EventDetails = () => {
                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border border-purple-100 hover:shadow-lg transition-all duration-300 group">
                   <div className="flex items-center mb-3">
                     <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-5 h-5 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -185,7 +225,9 @@ const EventDetails = () => {
                     </div>
                     <h3 className="font-semibold text-gray-800">Organizer</h3>
                   </div>
-                  <p className="text-gray-700 font-medium">{event.organizer?.Username || event.organizer}</p>
+                  <p className="text-gray-700 font-medium">
+                    {event.organizerName}
+                  </p>
                 </div>
               </motion.div>
 
@@ -198,11 +240,17 @@ const EventDetails = () => {
               >
                 <div className="bg-gray-50 p-4 rounded-xl border">
                   <p className="text-sm text-gray-500 mb-1">Category</p>
-                  <p className="font-semibold text-gray-800">{event.category}</p>
+                  <p className="font-semibold text-gray-800">
+                    {event.category}
+                  </p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-xl border">
-                  <p className="text-sm text-gray-500 mb-1">Available Tickets</p>
-                  <p className="font-semibold text-gray-800">{event.maxTickets}</p>
+                  <p className="text-sm text-gray-500 mb-1">
+                    Available Tickets
+                  </p>
+                  <p className="font-semibold text-gray-800">
+                    {event.maxTickets}
+                  </p>
                 </div>
               </motion.div>
 
@@ -216,7 +264,12 @@ const EventDetails = () => {
                 >
                   <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
                     <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center mr-3">
-                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg
+                        className="w-4 h-4 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -227,7 +280,9 @@ const EventDetails = () => {
                     </div>
                     About this event
                   </h3>
-                  <p className="text-gray-700 leading-relaxed text-lg">{event.details}</p>
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    {event.details}
+                  </p>
                 </motion.div>
               )}
             </CardContent>
@@ -243,12 +298,17 @@ const EventDetails = () => {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                   <div className="text-white">
                     <h3 className="text-xl font-bold mb-1">Get Your Tickets</h3>
-                    <p className="text-indigo-100">Secure your spot at this amazing event</p>
+                    <p className="text-indigo-100">
+                      Secure your spot at this amazing event
+                    </p>
                   </div>
 
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <label htmlFor="quantity" className="font-medium text-white text-sm">
+                      <label
+                        htmlFor="quantity"
+                        className="font-medium text-white text-sm"
+                      >
                         Quantity:
                       </label>
                       <select
@@ -258,7 +318,11 @@ const EventDetails = () => {
                         className="border-0 rounded-lg px-3 py-2 bg-white/20 backdrop-blur-sm text-white focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-300"
                       >
                         {[1, 2, 3, 4, 5].map((num) => (
-                          <option key={num} value={num} className="text-gray-800">
+                          <option
+                            key={num}
+                            value={num}
+                            className="text-gray-800"
+                          >
                             {num}
                           </option>
                         ))}
@@ -280,7 +344,7 @@ const EventDetails = () => {
         </Card>
       </motion.div>
     </section>
-  )
-}
+  );
+};
 
-export default EventDetails
+export default EventDetails;

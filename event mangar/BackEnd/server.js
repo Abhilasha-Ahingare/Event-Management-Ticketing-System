@@ -2,7 +2,6 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-
 const conncetDB = require("./utils/DataBase.js");
 
 const userRouter = require("./Router/User_Router.js");
@@ -12,9 +11,20 @@ const ticketRouter = require("./Router/tickect_router.js");
 const OrganizerRouter = require("./Router/Organizer_router.js");
 const adminRouter = require("./Router/admin_router.js");
 
+// ✅ IMPORT Stripe Webhook handler directly
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const webhook = require("./Controller/Payment_controller.js");
+
 const app = express();
 
-// ✅ Middleware
+// ✅ Stripe Webhook FIRST — raw body parser
+app.post(
+  "/api/payment/webhook",
+  express.raw({ type: "application/json" }),
+  webhook.webhook
+);
+
+// ✅ Now apply other middleware
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -22,10 +32,11 @@ app.use(
     credentials: true,
   })
 );
+
+// ✅ Normal JSON parsing for rest of app
 app.use(express.json());
 
-// app.use("/uploads/profiles", express.static("uploads/profiles"));
-// app.use("/uploads/files", express.static("uploads/files"));
+// ✅ Static files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ✅ Routers
@@ -41,9 +52,9 @@ const PORT = process.env.PORT || 4001;
 const startServer = async () => {
   try {
     await conncetDB();
-    app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   } catch (error) {
-    console.error("Failed to start server", error);
+    console.error("❌ Failed to start server", error);
     process.exit(1);
   }
 };
