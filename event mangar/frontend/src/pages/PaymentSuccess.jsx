@@ -1,4 +1,3 @@
-// src/pages/PaymentSuccess.jsx
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import api from "../context/utils/api";
@@ -14,18 +13,19 @@ const PaymentSuccess = () => {
       if (!sessionId) return;
 
       try {
-        const res = await api.post(`/payment/verify-payment`, {
-          sessionId: sessionId._id,
+        const { data } = await api.post("/payment/verify-payment", {
+          sessionId,
         });
-        setTicketInfo(res.data.ticketInfo);
+        setTicketInfo(data.ticketInfo);
       } catch (err) {
-        console.error("Payment verification failed", err);
+        console.error("❌ Payment verification failed:", err.message);
       }
     };
-    verifyPayment();
-  }, [searchParams]);
 
-  if (!ticketInfo) return <div>Verifying payment...</div>;
+    verifyPayment();
+  }, []);
+
+  if (!ticketInfo) return <div>🔄 Verifying payment...</div>;
 
   return (
     <div className="max-w-2xl mx-auto p-4 text-center">
@@ -33,13 +33,12 @@ const PaymentSuccess = () => {
         ✅ Payment Successful!
       </h1>
       <p className="mt-2 text-gray-700">
-        Thank you for booking. You have successfully purchased{" "}
+        Thank you for booking. You purchased{" "}
         <strong>{ticketInfo.quantity}</strong> ticket(s) for{" "}
         <strong>{ticketInfo.eventName}</strong>.
       </p>
       <p className="mt-2">
-        Your ticket has been emailed to you and is also available in your
-        account.
+        Ticket sent to your email and saved in your account.
       </p>
 
       <div className="mt-6 flex justify-center gap-4">

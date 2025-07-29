@@ -33,8 +33,8 @@ const createCheckoutSession = async (req, res) => {
         eventId: eventId,
         quantity: quantity || 1,
       },
-      success_url: `${process.env.CLIENT_URL}/payment-success`,
-      // success_url: `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      // success_url: `${process.env.CLIENT_URL}/payment-success`,
+      success_url: `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
 
       cancel_url: `${process.env.CLIENT_URL}/payment-cancel`,
     });
@@ -98,24 +98,24 @@ const webhook = async (req, res) => {
 const verifyPayment = async (req, res) => {
   try {
     const { sessionId } = req.body;
+    if (!sessionId) {
+      return res.status(400).json({ message: "Missing session ID" });
+    }
+
+    // 🔄 Verify with Stripe (example only)
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    const ticket = await Ticket.findOne({
-      paymentId: session.payment_intent,
-    }).populate("eventId", "title");
+    // You can now use session info to get customer, amount, etc.
+    const ticketInfo = {
+      eventName: "Event Title Placeholder", // Replace with real data
+      quantity: 1, // Replace with real data
+    };
 
-    if (!ticket) return res.status(404).json({ message: "Ticket not found" });
-
-    res.json({
-      ticketInfo: {
-        ...ticket.toObject(),
-        eventName: ticket.eventId.title,
-      },
-    });
-  } catch (err) {
-    console.error("Verify Payment Error:", err.message);
-    res.status(500).json({ message: "Verification failed" });
+    return res.status(200).json({ success: true, ticketInfo });
+  } catch (error) {
+    console.error("❌ Error verifying payment:", error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-module.exports = { createCheckoutSession, webhook ,verifyPayment };
+module.exports = { createCheckoutSession, webhook, verifyPayment };

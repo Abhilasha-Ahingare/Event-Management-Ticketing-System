@@ -9,7 +9,7 @@ const Events = [
     maxTickets: 5000,
     ticketsSold: 2,
     category: "Music",
-    image: "https://cdn.example.com/events/rockfest.jpg",
+    image: "https://picsum.photos/seed/picsum/200/300",
     organizer: "648a3a64fc13ae08423e654a",
     organizerName: "Abhilasha Verma",
     details:
