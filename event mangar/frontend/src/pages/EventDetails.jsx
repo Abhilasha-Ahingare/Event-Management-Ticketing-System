@@ -19,7 +19,6 @@ const EventDetails = () => {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
-
   useEffect(() => {
     const fetchSingleEvent = async () => {
       try {
@@ -37,11 +36,12 @@ const EventDetails = () => {
     };
     fetchSingleEvent();
   }, [id]);
-
+  // console.log(event?._id)
+  
   const handleByTicket = async () => {
     try {
       const response = await api.post(`/payment/checkout`, {
-        eventId: event._id,
+        eventId: event?._id,
         quantity,
       });
       window.location.href = response.data.url;

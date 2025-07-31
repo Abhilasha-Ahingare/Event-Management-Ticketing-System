@@ -5,7 +5,7 @@ import api from "../context/utils/api";
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const [ticketInfo, setTicketInfo] = useState(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const verifyPayment = async () => {
@@ -13,11 +13,11 @@ const PaymentSuccess = () => {
       if (!sessionId) return;
 
       try {
-        const { data } = await api.post("/payment/verify-payment", {
+        const { data } = await api.post(`/payment/verify-payment`, {
           sessionId,
         });
-        setTicketInfo([data.ticketInfo]);
-        console.log([data.ticketInfo])
+        setTicketInfo(data.ticketInfo);
+        console.log(data.ticketInfo);
       } catch (err) {
         console.error("❌ Payment verification failed:", err.message);
       }

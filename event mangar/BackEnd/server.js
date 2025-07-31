@@ -14,13 +14,14 @@ const adminRouter = require("./Router/admin_router.js");
 // ✅ IMPORT Stripe Webhook handler directly
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const webhook = require("./Controller/Payment_controller.js");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 // ✅ Stripe Webhook FIRST — raw body parser
 app.post(
   "/api/payment/webhook",
-  express.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   webhook.webhook
 );
 
