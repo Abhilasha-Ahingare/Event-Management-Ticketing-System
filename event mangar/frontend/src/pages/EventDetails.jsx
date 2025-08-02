@@ -99,7 +99,7 @@ const EventDetails = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <Card className="overflow-hidden border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
+        <Card className="overflow-hidden border-0 shadow-2xl bg-white/80 backdrop-blur-sm  flex flex-col justify-center items-center">
           {/* Hero Image Section */}
           <div className="relative w-full h-[500px] overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />

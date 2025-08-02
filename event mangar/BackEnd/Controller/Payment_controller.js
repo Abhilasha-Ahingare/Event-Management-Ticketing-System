@@ -61,6 +61,7 @@ const webhook = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   let event;
 
+  // Stripe requires raw body, make sure express.raw is used in route middleware
   try {
     event = stripe.webhooks.constructEvent(
       req.body,
@@ -72,20 +73,29 @@ const webhook = async (req, res) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
+  console.log("🔔 Stripe webhook triggered:", event.type);
+
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
 
     try {
+      // Extract metadata
       const userId = mongoose.Types.ObjectId(session.metadata.userId);
       const eventId = mongoose.Types.ObjectId(session.metadata.eventId);
       const quantity = parseInt(session.metadata.quantity || "1");
 
+      console.log("📦 Metadata received:", session.metadata);
+
+      // Find event
       const eventData = await Events.findById(eventId);
       if (!eventData) throw new Error("Event not found in webhook");
 
       const totalPrice = eventData.price * quantity;
+
+      // Generate QR code
       const qrCode = await QRcode(userId, eventId);
 
+      // Create and save ticket
       const ticket = new Ticket({
         userId,
         eventId,
@@ -98,15 +108,15 @@ const webhook = async (req, res) => {
 
       await ticket.save();
 
-      console.log("🎫 Ticket Created:", ticket);
+      console.log("🎫 Ticket successfully created:", ticket);
     } catch (err) {
-      console.error("❌ Error creating ticket:", err);
+      console.error("❌ Error creating ticket in webhook:", err.message);
+      return res.status(500).send("Internal Server Error");
     }
   }
 
   res.status(200).json({ received: true });
 };
-
 // -------------------------------
 // 3. VERIFY PAYMENT & GET TICKET
 // -------------------------------
@@ -117,11 +127,9 @@ const verifyPayment = async (req, res) => {
       return res.status(400).json({ message: "Missing session ID" });
     }
 
-    // const ticketInfo = await Ticket.findOne({
-    //   userId: req.user._id,
-    //   paymentId: sessionId,
-    // }).populate("eventId", "title date location price");
-    const ticketInfo = await Ticket.findOne({}).sort({ createdAt: -1 });
+    const ticketInfo = await Ticket.findOne({})
+      .sort({ createdAt: -1 })
+      .populate("eventId", "title date location price");
 
     if (!ticketInfo) {
       return res.status(404).json({ message: "Ticket not found" });

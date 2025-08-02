@@ -47,7 +47,7 @@ const MyTickets = () => {
                   {/* Ticket Image */}
                   <div className="w-full h-48 sm:h-56 bg-gray-200">
                     <img
-                      src={event.imgae || "/default-event.jpg"}
+                      src={event.imgae || "https://picsum.photos/seed/picsum/200/300"}
                       alt={event.title || "Event Image"}
                       className="w-full h-full object-cover"
                     />
@@ -56,10 +56,10 @@ const MyTickets = () => {
                   {/* Ticket Content */}
                   <div className="p-4 flex flex-col justify-between flex-grow">
                     <h3 className="text-lg md:text-xl font-semibold text-gray-800">
-                      {event.title || "Unknown Event"}
+                      {event.title || "Yoga & Wellness Retreat"}
                     </h3>
                     <p className="text-sm text-gray-600 mt-2">
-                      📍 {event.location || "Location not available"}
+                      📍 {event.location || "pune"}
                     </p>
                     <p className="text-sm text-gray-600 mt-2">
                       📅{" "}
